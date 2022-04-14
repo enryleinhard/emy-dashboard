@@ -149,7 +149,7 @@ export default {
   transition: 'home',
   name: "IndexPage",
   async asyncData({ $axios }) {
-    const url = "http://localhost:8000";
+    const url = "https://backend-emy.vercel.app";
     let response = await $axios.$get(`${url}/emy/supply`)
     let shipments = response.data
     return { shipments };
