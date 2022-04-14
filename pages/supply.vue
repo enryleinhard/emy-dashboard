@@ -74,8 +74,8 @@
         </div>
 
         <div class="py-5">
-          <button
-            type="button"
+          <NuxtLink
+            to="/routeplans"
             class="
               focus:outline-none
               text-white
@@ -92,8 +92,8 @@
               dark:focus:ring-green-800
             "
           >
-            ADD SUPPLY DATA
-          </button>
+            GET OPTIMIZED ROUTE
+          </NuxtLink>
         </div>
       </div>
       <table class="w-full text-left text-gray-500 dark:text-gray-400">

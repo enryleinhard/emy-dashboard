@@ -140,13 +140,13 @@
       </div>
       
       <div class="grid grid-cols-2 gap-6">
-        <div v-for="shipment, index in shipments" :key="index" class="">
+        <div v-for="shipment, index in routePlan" :key="index" class="">
           <NuxtLink to='/shipmentdetails' class="block py-8 px-10 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
           <div class="flex justify-between">
             <div class="flex">
               <svg class="self-center h-10 w-10 mr-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path fill="#063E3F" d="M368 0C394.5 0 416 21.49 416 48V96H466.7C483.7 96 499.1 102.7 512 114.7L589.3 192C601.3 204 608 220.3 608 237.3V352C625.7 352 640 366.3 640 384C640 401.7 625.7 416 608 416H576C576 469 533 512 480 512C426.1 512 384 469 384 416H256C256 469 213 512 160 512C106.1 512 64 469 64 416H48C21.49 416 0 394.5 0 368V48C0 21.49 21.49 0 48 0H368zM416 160V256H544V237.3L466.7 160H416zM160 368C133.5 368 112 389.5 112 416C112 442.5 133.5 464 160 464C186.5 464 208 442.5 208 416C208 389.5 186.5 368 160 368zM480 464C506.5 464 528 442.5 528 416C528 389.5 506.5 368 480 368C453.5 368 432 389.5 432 416C432 442.5 453.5 464 480 464z"/></svg>
               <div class="">
-                <p class="self-center text-lg font-bold tracking-tight text-gray-900 dark:text-white">Shipment Route A</p>
+                <p class="self-center text-lg font-bold tracking-tight text-gray-900 dark:text-white">Shipment Route {{index+1}}</p>
                 <p class="text-md text-gray-500">Shipment Date</p>
               </div>
             </div>
@@ -169,12 +169,21 @@
 export default {
   transition: "home",
   name: "Shipments",
-  // async asyncData(context) {
-  //   const url = "https://api.carbonintensity.org.uk/intensity/date/2020-01-01/2020-12-31";
-  //   let response = await context.$axios.$get(url, "/api/shipments")
-  //   let shipments = response.data.data
-  //   return { shipments };
-  // },
+  async asyncData({ $axios }) {
+    const url = "http://localhost:8000";
+    let response = await $axios.$get(`${url}/emy/routes`)
+    let x = response
+
+    var routePlan = []
+
+    x.data.map((result) => {
+      result.real_distance_traveled.map((route) => {
+        routePlan.push(route)
+      })
+    })
+
+    return { routePlan };
+  },
   data() {
     return {
       shipments: [1,2,3,4,5,6,7,8,9,10],
